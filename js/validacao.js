@@ -54,6 +54,9 @@ const mensagensDeErro = {
     },
     estado: {
         valueMissing: 'O campo de estado não pode estar vazio.'
+    },
+    preco: {
+        valueMissing: 'O campo de preço não pode estar vazio.'
     }
 }
 
@@ -73,12 +76,6 @@ function mostraMensagemDeErro(tipoDeInput, input) {
     
     return mensagem
 }
-
-const dataNascimento = document.querySelector('#nascimento')
-
-dataNascimento.addEventListener('blur', (evento) => {
-    validaDataNascimento(evento.target)
-})
 
 function validaDataNascimento(input) {
     const dataRecebida = new Date(input.value)
@@ -102,14 +99,14 @@ function validaCPF(input) {
     const cpfFormatado = input.value.replace(/\D/g, '')
     let mensagem = ''
 
-    if(!checaCPFrepetido(cpfFormatado) || !checaEstruturaCPF(cpfFormatado)) {
+    if(!checaCPFRepetido(cpfFormatado) || !checaEstruturaCPF(cpfFormatado)) {
         mensagem = 'O CPF digitado não é válido.'
     }
 
     input.setCustomValidity(mensagem)
 }
 
-function checaCPFrepetido(cpf) {
+function checaCPFRepetido(cpf) {
     const valoresRepetidos = [
         '00000000000',
         '11111111111',
@@ -181,7 +178,7 @@ function recuperarCEP (input) {
         ).then(
             data => {
                 if(data.erro) {
-                    input.setCustomValidity('Não foi possível buscar o CEP')
+                    input.setCustomValidity('Não foi possível buscar o CEP.')
                     return 
                 }
                 input.setCustomValidity('')
@@ -198,6 +195,6 @@ function preencheCamposComCEP(data) {
     const estado = document.querySelector('[data-tipo="estado"]')
 
     logradouro.value = data.logradouro
-    cidade.value = data.cidade
+    cidade.value = data.localidade
     estado.value = data.uf
 }
